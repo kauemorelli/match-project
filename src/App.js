@@ -1,0 +1,13 @@
+//import Cards from './components/Cards';
+import Routes from './routes';
+import './App.scss';
+
+function App() {
+  return (
+    <div className="App">
+      <Routes />
+    </div>
+  );
+}
+
+export default App;

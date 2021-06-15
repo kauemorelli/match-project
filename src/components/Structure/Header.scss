@@ -1,0 +1,27 @@
+header.header {
+	display: grid;
+	grid-template-columns: repeat(2, 2fr);
+  padding: 20px;
+  
+	.logo-box {
+    text-align: right;
+
+    .logo {
+      width: 80px;
+    }
+  }
+
+  .title-header {
+    h1 {
+      font-size: 32px;
+      color: #fff;
+    }
+  }
+}
+
+.main {
+  padding-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+}

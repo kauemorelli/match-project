@@ -1,0 +1,112 @@
+@import '../../styles/variables';
+
+/* List Cards*/
+.list-cards {
+  max-width: 450px;
+  margin: 0 auto;
+
+  h2 {
+    color: $white;
+    margin-bottom: 20px;
+  }
+
+  .item {
+    background: $white;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    
+    .text,
+    .action {
+      width: 50%;
+    }
+
+    h3 {
+      color: $primary;
+      margin-bottom: 5px;
+      text-transform: capitalize;
+    }
+
+    p {
+      font-size: 12px;
+      color: #666;
+    }
+    .action {
+      text-align: right;
+
+      .rating-buttom {
+        background: #f9cdc0;
+        border: 0;
+        border-radius: 5px;
+        color: #ef4a68;
+        padding: 10px 20px;
+        font-weight: 800;
+        text-decoration: none;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+/* Card */
+.cards-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.cards {
+  background: $white;
+  border-radius: 10px;
+  padding: 2px;
+
+  img.estampa {
+    border-radius: 10px;
+    width: 348px;
+  }
+
+	.actions {
+		display: flex;
+
+		button {
+			width: 50%;
+			padding: 10px;
+			font-size: 22px;
+			border: 0;
+			margin: 10px;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: all .2s linear;
+			background: #ddd;
+
+			&:hover {
+				-webkit-box-shadow: 0px 0px 11px 0px rgba(186,186,186,1);
+				-moz-box-shadow: 0px 0px 11px 0px rgba(186,186,186,1);
+				box-shadow: 0px 0px 11px 0px rgba(186,186,186,1);
+			}
+
+			&.like {
+				color: darkgreen;
+
+				&:hover {
+					background: darkgreen;
+					color: $white;
+				}
+			}
+
+			&.dislike {
+				color: darkred;
+
+				&:hover {
+					background: darkred;
+					color: $white;
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: 768px) {
+}
