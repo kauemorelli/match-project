@@ -15,19 +15,21 @@ async function token(){
 	return dataToken;
 }
 
-async function getCampaing(token){
+async function getLogin(token){
 	const tokenId = token;
 
 	return axios({
-		url: `${host}/${version}/campaign`,
+		url: `${host}/${version}/auth/login`,
 		method: 'get',
 		timeout: 8000,
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${tokenId}`
+			'login': `appMatchEstampa@teste.com`,
+			'password': `CeA..App`
 		}
 	})
 	.then(function(data){
+		debugger;
 		return data.data;
 	})
 	.catch (err => {
@@ -37,11 +39,11 @@ async function getCampaing(token){
 
 async function makeAsync() {
 	const token_id = await token();
-	const campaignList = await getCampaing(token_id);
+	const campaignList = await getLogin(token_id);
 
 	return campaignList;
 }
 
-export function apiCampaing(){
+export function apiLogin(){
 	return makeAsync();
 }

@@ -1,13 +1,47 @@
 import axios from 'axios';
+import * as settings from '../config.json';
+import { getDataToken } from './apiToken';
 
-const host = 'http://191.5.125.217:5002';
+const host = settings.HOST;
+const version = settings.VERSION;
 
-const apiPatterns = axios.create({
-    baseURL: `${host}/v1/patternclothe?campaignid=1`,
-    headers: {
-      'Content-Type': 'application/json',
-	  'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkZyb250LUVuZCBNYXRjaCBkZSBFc3RhbXBhcyIsInJvbGUiOiJBY2Vzc28gQVBJIiwiZW1haWwiOiJmcm9udEB0ZXN0ZS5jb20uYnIiLCJuYW1laWQiOiI0NGM5MmEwMC04YzkwLTRiMDktYjFmZi1hYzlmNzk5N2NhM2EiLCJuYmYiOjE2MjM3NzU4MDEsImV4cCI6MTYyMzc4MzAwMSwiaWF0IjoxNjIzNzc1ODAxfQ.ia6xEZBnnz7epK58TQMfK1bTrJIMLPB_1amHFtDJ-X0'
-    }
-});
+async function token(){
+	let dataToken;
+
+	await getDataToken().then(res => {
+		dataToken = res;
+	});
 	
-export default apiPatterns;
+	return dataToken;
+}
+
+async function getPatternClothe(token){
+	const tokenId = token;
+
+	return axios({
+		url: `${host}/${version}/patternclothe?campaignid=1`,
+		method: 'get',
+		timeout: 8000,
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${tokenId}`
+		}
+	})
+	.then(function(data){
+		return data.data;
+	})
+	.catch (err => {
+		console.error(err)
+	})
+}
+
+async function makeAsync() {
+	const token_id = await token();
+	const patternClotheList = await getPatternClothe(token_id);
+
+	return patternClotheList;
+}
+
+export function apiPatterns(){
+	return makeAsync();
+}

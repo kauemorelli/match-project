@@ -12,6 +12,9 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { apiLogin } from '../../../api/apiLogin';
+import { connect } from 'react-redux';
+import { loadUser } from '../../../store/actions/user';
 
 function Copyright() {
   return (
@@ -57,7 +60,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignInSide() {
+function handleSubmit(event){
+  console.log('Submitted');
+  event.preventDefaut();
+}
+
+function SignInSide(props) {
   const classes = useStyles();
 
   return (
@@ -72,7 +80,7 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Entrar
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -129,3 +137,14 @@ export default function SignInSide() {
     </Grid>
   );
 }
+
+function mapStateToProps(state) {
+	return {
+		user: state.user
+	}
+}
+
+
+export default connect(
+  mapStateToProps
+)(SignInSide);
