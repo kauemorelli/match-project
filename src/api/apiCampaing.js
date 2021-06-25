@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as settings from '../config.json';
 import { getDataToken } from './apiToken';
 import publicIp from "public-ip";
+import moment from 'moment';
 
 const host = settings.HOST;
 const version = settings.VERSION;
@@ -12,7 +13,7 @@ async function token(){
 	await getDataToken().then(res => {
 		dataToken = res;
 	});
-	debugger;
+	// debugger;
 	return dataToken;
 }
 
@@ -32,7 +33,7 @@ async function getCampaing(token, client_ip){
 		}
 	})
 	.then(function(data){
-		debugger;
+		// debugger;
 		return data.data;
 	})
 	.catch (err => {
@@ -45,7 +46,7 @@ async function makeAsync() {
 	const ipv4 = await publicIp.v4() || "";	
 	const campaignList = await getCampaing(token_id, ipv4);
 	console.log(ipv4);
-	debugger;
+	// debugger;
 
 	return campaignList;
 }

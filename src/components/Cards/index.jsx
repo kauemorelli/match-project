@@ -28,8 +28,8 @@ class ListCampaing extends PureComponent {
 		
 		return (
 			<div className="list-cards">
+				<p className="welcome">Olá <span>Kauê</span>,<br />escolha a melhor estampas:</p>
 				<h2>Campanhas</h2>
-				<p>Olá Kauê, escolha o melhor match de estampas</p>
 				{/* {items.map(item => (
 					<div key={item.campaignid}>
 						{!item.active ? (

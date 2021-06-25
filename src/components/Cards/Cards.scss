@@ -10,6 +10,17 @@
     margin-bottom: 20px;
   }
 
+  .welcome {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+    
+    span {
+      font-weight: 800;
+    }
+  }
+
   .item {
     background: $white;
     border-radius: 10px;
@@ -93,7 +104,37 @@
   -webkit-box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
   box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -150px;
+  margin-right: -150px;
+  -webkit-transition: all 1s linear;
+  -moz-transition: all 1s linear;
+  -o-transition: all 1s linear;
+  transition: all 1s linear;
+
+  &.card_true,
+  &.card_true * {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0s, opacity 0.5s linear;;
+    height: 0;
+    z-index: 0;
+    
+  }
+  &.card_false,
+  &.card_false * {
+    opacity: 1;
+    visibility: visible;
+    transition: visibility 0s, opacity 0.5s linear;;
+    z-index: 0;
+  }
+
+  &.card_false:not(:first-child),
+  &.card_false:not(:first-child) * {
+    // visibility: hidden;
+  }
 
   img.estampa {
     border-radius: 10px;
