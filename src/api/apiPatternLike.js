@@ -12,27 +12,32 @@ async function token(){
 	await getDataToken().then(res => {
 		dataToken = res;
 	});
-	debugger;
+	// debugger;
 	return dataToken;
 }
 
-async function getCampaing(token, client_ip){
+async function postPatternLike(token, client_ip, patternclotheid, reaction){
 	const tokenId = token;
 	const ip_address = client_ip;
+	const patternId = patternclotheid;
+	const reactionBoolean = reaction;
 
 	return axios({
-		url: `${host}/${version}/campaign`,
-		method: 'get',
+		url: `${host}/${version}/patternclothelike`,
+		method: 'post',
 		timeout: 8000,
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': `Bearer ${tokenId}`,
 			'client_ip': `${ip_address}`,
 			'login': `appMatchEstampa@teste.com`
+		},
+		data: {
+			"patternclotheid": `${patternId}`,
+			"like": `${reactionBoolean}`
 		}
 	})
 	.then(function(data){
-		debugger;
 		return data.data;
 	})
 	.catch (err => {
@@ -40,16 +45,18 @@ async function getCampaing(token, client_ip){
 	})
 }
 
-async function makeAsync() {
+async function makeAsync(patternclotheid, reaction) {
+	const patternId = patternclotheid;
+	const reactionData = reaction;
 	const token_id = await token();
 	const ipv4 = await publicIp.v4() || "";	
-	const campaignList = await getCampaing(token_id, ipv4);
-	console.log(ipv4);
-	debugger;
+	const patternLikReturn = await postPatternLike(token_id, ipv4, patternId, reactionData);
+	// console.log(ipv4);
+	// debugger;
 
-	return campaignList;
+	return patternLikReturn;
 }
 
-export function apiCampaing(){
-	return makeAsync();
+export function apiPatternLike(patternclotheid, reaction){
+	return makeAsync(patternclotheid, reaction);
 }

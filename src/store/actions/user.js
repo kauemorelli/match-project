@@ -2,7 +2,7 @@
 export function loadUser(data) {
     return {
         type: 'LOGIN',
-        payLoad: data
+        payload: data
     }
 }
 
@@ -10,6 +10,6 @@ export function loadUser(data) {
 export function logout(data) {
     return {
         type: 'LOGOUT',
-        payLoad: data
+        payload: data
     }
 }

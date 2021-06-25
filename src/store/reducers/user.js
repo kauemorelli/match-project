@@ -1,3 +1,6 @@
+
+import { apiLogin } from './../../api/apiLogin';
+
 const initialState = {
     name: 1,
     email: 1,
@@ -5,19 +8,19 @@ const initialState = {
 }
 
 export default function(state = initialState, action) { 
-    debugger;
+    // debugger;
     switch(action.type) {
         case 'LOGIN':
             return {
                 ...state,
-                name: action.payLoad,
+                name: action.payload,
                 email: 1,
                 actived: true
             }
         case 'LOGOUT':
             return {
                 ...state,
-                name: action.payLoad,
+                name: action.payload,
                 email: 1,
                 actived: false
             }

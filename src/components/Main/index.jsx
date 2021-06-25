@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Header from './../Structure/Header';
 // import Cards from './../Cards';
-import ListCards from './../Cards/ListCards';
+import ListCampaing from '../Cards';
 
 export default class Main extends PureComponent {
   state = {
@@ -16,7 +16,7 @@ export default class Main extends PureComponent {
       <div>
         <Header />
         <div className="main">
-          <ListCards />
+          <ListCampaing />
         </div>
       </div>
     );

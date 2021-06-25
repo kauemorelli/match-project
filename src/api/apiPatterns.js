@@ -15,16 +15,17 @@ async function token(){
 	return dataToken;
 }
 
-async function getPatternClothe(token){
+async function getPatternClothe(token, campaing_id){
 	const tokenId = token;
 
 	return axios({
-		url: `${host}/${version}/patternclothe?campaignid=1`,
+		url: `${host}/${version}/patternclothe/campaign/${campaing_id}`,
 		method: 'get',
 		timeout: 8000,
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${tokenId}`
+			'Authorization': `Bearer ${tokenId}`,
+			'login': `appMatchEstampa@teste.com`
 		}
 	})
 	.then(function(data){
@@ -35,13 +36,13 @@ async function getPatternClothe(token){
 	})
 }
 
-async function makeAsync() {
+async function makeAsync(campaing_id) {
 	const token_id = await token();
-	const patternClotheList = await getPatternClothe(token_id);
+	const patternClotheList = await getPatternClothe(token_id, campaing_id);
 
 	return patternClotheList;
 }
 
-export function apiPatterns(){
-	return makeAsync();
+export function apiPatterns(campaing_id){
+	return makeAsync(campaing_id);
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,8 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { apiLogin } from '../../../api/apiLogin';
-import { connect } from 'react-redux';
-import { loadUser } from '../../../store/actions/user';
+import { connect, useDispatch } from 'react-redux';
+import { loadUser, logout } from '../../../store/actions/user';
 
 function Copyright() {
   return (
@@ -60,13 +60,70 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function handleSubmit(event){
-  console.log('Submitted');
-  event.preventDefaut();
-}
+
+// function handleSubmit(e){
+//   console.log('Submitted');
+
+//   e.preventDefault();
+//   async function userAuth(email, pass) {
+//     debugger;
+//     try {
+//       const response  = await apiLogin(email, pass);
+//       console.log(response);
+//       setState(response.user);
+//       debugger;
+//     } catch (error) {
+//       alert("Ocorreu um erro ao carregar o usuário");
+//     }
+//   } 
+
+//   userAuth(e.target[0].defaultValue, e.target[2].defaultValue);
+
+//   e.preventDefault();
+  
+//   debugger;
+// }
 
 function SignInSide(props) {
   const classes = useStyles();
+  const [ active, setActive ] = useState(false);
+  // debugger;
+
+  useEffect((props) => {
+//     async function userAuth(email, pass) {
+//   debugger;
+//       try {
+//         const response  = await apiLogin('appMatchEstampa@teste.com', 'CeA..App');
+//         console.log(response);
+//         // debugger;
+//       } catch (error) {
+//         alert("Ocorreu um erro ao carregar o usuário");
+//       }
+//     } 
+// debugger;
+//     userAuth();
+
+    console.log('DidUseEffect');
+  });
+  const dispatch = useDispatch();
+  function handleSubmit(e){
+    e.preventDefault();
+    async function userAuth(email, pass) {
+      // debugger;
+      try {
+        const response  = await apiLogin(email, pass);
+        console.log(response);
+        setActive(response.user.active);
+        dispatch(loadUser(response.user.active));
+        // debugger;
+      } catch (error) {
+        alert("Ocorreu um erro ao carregar o usuário");
+      }
+    } 
+
+    userAuth(e.target[0].defaultValue, e.target[2].defaultValue);
+    // debugger;
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -80,6 +137,9 @@ function SignInSide(props) {
           <Typography component="h1" variant="h5">
             Entrar
           </Typography>
+          <Typography component="h1" variant="h5">
+            {`Usuario ativo: ${active}`}
+          </Typography>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
@@ -90,6 +150,7 @@ function SignInSide(props) {
               label="E-mail"
               name="email"
               autoComplete="email"
+              value={'appMatchEstampa@teste.com'}
               autoFocus
             />
             <TextField
@@ -102,6 +163,7 @@ function SignInSide(props) {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={'CeA..App'}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -144,7 +206,23 @@ function mapStateToProps(state) {
 	}
 }
 
+function mapDispatchToProps(dispatch) {
+	return {
+		loadUser(data) {
+      // debugger;
+			// Action creator -> Action
+			const action = loadUser(data);
+			dispatch(action);
+		},
+		logout(data) {
+			// Action creator -> Action
+			const action = logout(data);
+			dispatch(action);
+		},
+	}
+}
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(SignInSide);

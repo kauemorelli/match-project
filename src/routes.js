@@ -12,7 +12,7 @@ function Routes() {
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={Main} />
-                <Route path="/cards" component={CardsPage} />
+                <Route path="/cards/:testvalue" name="cards" component={CardsPage} />
                 <Route path="/admin" component={Admin} />
                 <Route path="/dashboard" exact component={Dashboard} />
                 <Route path="/users" exact component={Users} />
