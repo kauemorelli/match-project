@@ -6,7 +6,8 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 // import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
-import MenuAdmin from '../menu-admin'
+import MenuAdmin from '../menu-admin';
+import OAuth2Login from 'react-simple-oauth2-login';
 
 function Copyright() {
   return (
@@ -19,7 +20,10 @@ function Copyright() {
       {'.'}
     </Typography>
   );
-}
+};
+
+const onSuccess = response => console.log(response);
+const onFailure = response => console.error(response);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,6 +62,14 @@ export default function Dashboard() {
             <Container maxWidth="lg" className={classes.container}>
                 <Grid container spacing={3}>
                     <h1>Dashboard</h1>
+                    <OAuth2Login
+                      authorizationUrl="https://accounts.spotify.com/authorize"
+                      responseType="token"
+                      clientId="24dd6098-7c88-416e-a6f0-e06f0288d777"
+                      // redirectUri="http://localhost:3000/oauth-callback"
+                      redirectUri={window.location.origin}
+                      onSuccess={onSuccess}
+                      onFailure={onFailure} />
                 </Grid>
                 <Box pt={4}>
                     <Copyright />

@@ -1,5 +1,5 @@
 
-import { apiLogin } from './../../api/apiLogin';
+// import { apiLogin } from './../../api/apiLogin';
 
 const initialState = {
     name: 1,
@@ -7,9 +7,9 @@ const initialState = {
     actived: false
 }
 
-export default function(state = initialState, action) { 
+export default function execute(state = initialState, action) {
     // debugger;
-    switch(action.type) {
+    switch (action.type) {
         case 'LOGIN':
             return {
                 ...state,
@@ -24,7 +24,7 @@ export default function(state = initialState, action) {
                 email: 1,
                 actived: false
             }
-        default: 
+        default:
             return state
     }
 }

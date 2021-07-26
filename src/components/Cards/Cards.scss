@@ -4,6 +4,8 @@
 .list-cards {
   max-width: 450px;
   margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
 
   h2 {
     color: $white;
@@ -74,6 +76,29 @@
   margin: 20px;
   position: relative;
 
+  .empty-cards {
+    width: 300px;
+    padding: 5px;
+    margin: 0 auto;
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    margin-left: -150px;
+    z-index: -10;
+    font-size: 90px;
+    font-weight: 800;
+    color: #fff;
+    text-align: center;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, .4);
+
+    span {
+      font-size: 18px;
+      font-weight: 400;
+      display: block;
+      margin-top: 20px;
+    }
+  }
+
   .count-items {
     position: absolute;
     z-index: -1;
@@ -93,6 +118,25 @@
     -moz-box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
     box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
   }
+
+  .btn-back {
+    a {
+      color: #ef4a68;
+      font-weight: 800;
+      font-size: 13px;
+      text-decoration: none;
+      text-transform: uppercase;
+      background: #f9cdc0;
+      padding: 10px 20px 10px 15px;
+      border-radius: 5px;
+    }
+  }
+}
+
+.swipe {
+  position: absolute;
+  left: 50%;
+  margin-left: -150px;
 }
 
 .cards {
@@ -107,38 +151,66 @@
   position: absolute;
   top: 0;
   left: 50%;
-  margin-left: -150px;
-  margin-right: -150px;
-  -webkit-transition: all 1s linear;
-  -moz-transition: all 1s linear;
-  -o-transition: all 1s linear;
-  transition: all 1s linear;
+  // margin-left: -150px;
+  -webkit-transition: all 1s ease-out;
+  -moz-transition: all 1s ease-out;
+  -o-transition: all 1s ease-out;
+  transition: all 1s ease-out;
 
-  &.card_true,
-  &.card_true * {
+  &.card_true {
     opacity: 0;
     visibility: hidden;
-    transition: visibility 0s, opacity 0.5s linear;;
-    height: 0;
-    z-index: 0;
-    
+    z-index: -1 !important;
+    top: 20%;
+    transform: scale(0);
   }
-  &.card_false,
-  &.card_false * {
+  &.card_false {
     opacity: 1;
     visibility: visible;
-    transition: visibility 0s, opacity 0.5s linear;;
-    z-index: 0;
+    &:before {
+      content: '\f164';
+      font-family: 'Fontawesome';
+      color: darkgreen;
+      position: absolute;
+      top: 50px;
+      right: -32px;
+      display: block;
+      position: absolute;
+      top: 40%;
+      background: #fff;
+      border-radius: 0 5px 5px 0;
+      padding: 5px 10px;
+      box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+    }
+    &:after {
+      content: '\f165';
+      font-family: 'Fontawesome';
+      color: darkred;
+      display: block;
+      position: absolute;
+      top: 40%;
+      left: -32px;
+      background: #fff;
+      border-radius: 5px 0 0 5px;
+      padding: 5px 10px;
+      box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+    }
   }
 
-  &.card_false:not(:first-child),
-  &.card_false:not(:first-child) * {
-    // visibility: hidden;
+  &.voted {
+    transform: scale(0);
+    filter: blur(50px);
+    animation: likeAnimate 1.1s ease-in-out;
+  }
+
+  &.card_false:first {
+    z-index: 2;
   }
 
   img.estampa {
     border-radius: 10px;
     width: 100%;
+    height: 290px;
   }
 
   .infos {
@@ -149,6 +221,7 @@
       font-weight: 400;
       color: #333;
       margin-top: 5px;
+      height: 38px;
     }
     h2 {
       font-size: 12px;
@@ -159,6 +232,7 @@
 
 	.actions {
 		text-align: center;
+    display: none;
 
 		button {
 			width: 60px;
@@ -172,7 +246,8 @@
 			transition: all .2s linear;
 			background: #eee;
 
-			&:hover {
+			&:hover,
+      &:active {
 				-webkit-box-shadow: 0px 0px 11px 0px rgba(186,186,186,1);
 				-moz-box-shadow: 0px 0px 11px 0px rgba(186,186,186,1);
 				box-shadow: 0px 0px 11px 0px rgba(186,186,186,1);
@@ -181,7 +256,8 @@
 			&.like {
 				color: darkgreen;
 
-				&:hover {
+				&:hover,
+				&:active {
 					background: darkgreen;
           border-color: darkgreen;
 					color: $white;
@@ -191,7 +267,8 @@
 			&.dislike {
 				color: darkred;
 
-				&:hover {
+				&:hover
+				&:active {
 					background: darkred;
           border-color: darkred;
 					color: $white;
@@ -200,6 +277,42 @@
 		}
 	}
 }
+.cards-wrapper > div.cards:not(.card_true) {
+  // z-index: 2;
+  // background: yellow;
+}
+.cards-wrapper > div.cards:not(.card_true):last-child {
+  // background: green;
+}
 
-@media (min-width: 768px) {
+@media screen and (max-width: 768px) {
+  .cards {
+    margin-top: 80px;
+  }
+}
+
+@keyframes likeAnimate {
+  from {
+    transform: rotate(0deg);
+    visibility: visible;
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-80px);
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+  }
+}
+@keyframes deslikeAnimate {
+  from {
+    transform: rotate(0deg);
+    visibility: visible;
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-80px);
+    visibility: hidden;
+    opacity: 0;
+  }
 }

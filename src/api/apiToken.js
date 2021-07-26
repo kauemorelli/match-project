@@ -21,9 +21,6 @@ export function getDataToken() {
 		}
 	})
 	.then(function(data){
-		// console.log('data.data.token');
-		// console.log(data.data.token);
-		// debugger;
 		return data.data.token;
 	})
 	.catch (err => console.error(err))

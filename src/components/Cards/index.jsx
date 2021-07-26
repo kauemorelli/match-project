@@ -4,7 +4,7 @@ import './Cards.scss';
 import { apiCampaing } from '../../api/apiCampaing';
 import { connect } from 'react-redux';
 import { loadUser, logout } from '../../store/actions/user';
-import Cards from './Cards';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 class ListCampaing extends PureComponent {
 	state = {
@@ -21,31 +21,26 @@ class ListCampaing extends PureComponent {
 
 	render() {
 		const { items } = this.state;
-		const { user } = this.props;
-		// debugger;
-		// console.log('Pure user');
-		// console.log(user);
+		// const { user } = this.props;
+
+		let isLoading = true;
+		
+		if(items && items.length !== 0) {
+			isLoading = false;
+		}
+		
+		// ADD valicação de items
+		items.sort((a, b) => (
+			(a.isanswer === null) - (b.isanswer === null)
+			|| a.isanswer - b.isanswer
+			|| b.campaignid - a.campaignid
+		));
 		
 		return (
 			<div className="list-cards">
-				<p className="welcome">Olá <span>Kauê</span>,<br />escolha a melhor estampas:</p>
+				<p className="welcome">Olá <span>André</span>,<br />escolha as melhores estampas:</p>
 				<h2>Campanhas</h2>
-				{/* {items.map(item => (
-					<div key={item.campaignid}>
-						{!item.active ? (
-							<div className="item">
-								<div className="text">
-									<h3>{item.name}</h3>
-									<p>{item.datestart} a {item.dateend}</p>
-								</div>
-								<div className="action">
-									<Link to={`/cards?id=${item.campaignid}`} className="rating-buttom">Participar</Link>
-								</div>
-							</div>
-						) : <p>Nenhuma campanha pra votação</p>}
-					</div>
-				))} */}
-
+				{isLoading && (<div className="loading-wrap"><CircularProgress color="primary" /></div>)}
 				{items.map(item => (
 					<div className="item" key={item.campaignid}>
 						{item.active && (
@@ -58,25 +53,19 @@ class ListCampaing extends PureComponent {
 						)}
 						{!item.isanswer ? (
 							<div className="action">
-								
 								<Link
-									to={
-										{
-											pathname: `/cards/${item.campaignid}`,
-											state: {                      
-												campaing_id: `${item.campaignid}`,
-											}
+									to={{
+										pathname: `/cards/${item.campaignid}`,
+										state: {                      
+											campaing_id: `${item.campaignid}`,
 										}
-									}
-									// to={`/cards/${item.campaignid}`}
-									// campaing_id={`${item.campaignid}`}
+									}}
 									className="rating-buttom"
 								>Participar</Link>
-								
 							</div>
 						) : (
 							<div className="action">
-								<Link className="rating-buttom rated">Votado</Link>
+								<Link to={'/#'} className="rating-buttom rated">Votado</Link>
 							</div>
 						)}
 					</div>

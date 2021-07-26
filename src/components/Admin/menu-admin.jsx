@@ -7,19 +7,24 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { mainListItems, secondaryListItems } from './Dashboard/listItems';
+import { mainListItems } from './Dashboard/listItems';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { CssBaseline } from '@material-ui/core';
-
+import { CssBaseline, Grid } from '@material-ui/core';
+import logocea from '../../cea-logo.svg';
+import './index.scss';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
-        backgroundColor: '#5f78fb'
+    },
+    toolbarTop: {
+        background: 'linear-gradient(120deg, rgba(245,71,85,1) 0%, rgba(183,56,83,1) 100%) !important',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
     },
     toolbarIcon: {
         display: 'flex',
@@ -80,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuAdmin() {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const handleDrawerOpen = () => {
       setOpen(true);
     };
@@ -92,19 +97,26 @@ export default function MenuAdmin() {
         <>
             <CssBaseline />
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-                <Toolbar className={classes.toolbar}>
-                <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                    Dashboard
-                </Typography>
+                <Toolbar className={classes.toolbarTop}>
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Grid container>
+                        <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
+                            <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                                Painel | Match de estampas
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
+                        <img src={logocea} className="logo" alt="logo" />
+                        </Grid>
+                    </Grid>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -121,8 +133,6 @@ export default function MenuAdmin() {
                 </div>
                 <Divider />
                 <List>{mainListItems}</List>
-                <Divider />
-                <List>{secondaryListItems}</List>
             </Drawer>
         </>
     )

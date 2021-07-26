@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Login from './Login/index'
+import Reports from './Reports';
 
 export default class Admin extends PureComponent {
   state = {
@@ -12,7 +12,7 @@ export default class Admin extends PureComponent {
   render() {
     return (
       <div>
-          <Login />
+          <Reports />
       </div>
     );
   }

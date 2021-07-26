@@ -12,7 +12,7 @@ async function token(){
 	await getDataToken().then(res => {
 		dataToken = res;
 	});
-	// debugger;
+	
 	return dataToken;
 }
 
@@ -30,7 +30,7 @@ async function postPatternLike(token, client_ip, patternclotheid, reaction){
 			'Content-Type': 'application/json',
 			'Authorization': `Bearer ${tokenId}`,
 			'client_ip': `${ip_address}`,
-			'login': `appMatchEstampa@teste.com`
+			'login': `appMatchEstampa+${ip_address}@teste.com`
 		},
 		data: {
 			"patternclotheid": `${patternId}`,
@@ -52,7 +52,6 @@ async function makeAsync(patternclotheid, reaction) {
 	const ipv4 = await publicIp.v4() || "";	
 	const patternLikReturn = await postPatternLike(token_id, ipv4, patternId, reactionData);
 	// console.log(ipv4);
-	// debugger;
 
 	return patternLikReturn;
 }

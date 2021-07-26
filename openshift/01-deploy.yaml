@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: CI_PROJECT_NAME
+    app.gitlab.com/env: CI_ENVIRONMENT_SLUG
+    app.gitlab.com/app: CI_PROJECT_PATH_SLUG
+  annotations:
+    app.gitlab.com/app: CI_PROJECT_PATH_SLUG
+    app.gitlab.com/env: CI_ENVIRONMENT_SLUG
+  name: CI_PROJECT_NAME
+  namespace: KUBE_NAMESPACE
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: CI_PROJECT_NAME
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        run: CI_PROJECT_NAME
+        app.gitlab.com/env: CI_ENVIRONMENT_SLUG
+        app.gitlab.com/app: CI_PROJECT_PATH_SLUG
+    spec:
+      containers:
+      - image: CONTAINER_IMAGE
+        imagePullPolicy: Always
+        name: CI_PROJECT_NAME
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            cpu: REQUEST_CPU # 50m
+            memory: REQUEST_MEMORY # 300Mi
+          limits:
+            cpu: LIMITS_CPU # 100m
+            memory: LIMITS_MEMORY # 200Mi
+        #https://docs.openshift.com/enterprise/3.1/dev_guide/application_health.html
+#        readinessProbe:
+#          httpGet:
+#              path: /healthz/zipcode
+#              port: 8080
+#              httpHeaders:
+#              - name: X-Custom-Header
+#                value: Awesome
+#          initialDelaySeconds: READINESS_INITIAL_DELAY # 120
+#        livenessProbe:
+#          httpGet:
+#            path: /healthz
+#            port: 8080
+#            httpHeaders:
+#            - name: X-Custom-Header
+#              value: Awesome
+#          initialDelaySeconds: LIVENESS_INITIAL_DELAY # 120
+        name: liveness
+        env:
+        - name: TZ
+          value: America/Sao_paulo
+      restartPolicy: Always
+

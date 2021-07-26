@@ -14,7 +14,7 @@ export default class Header extends PureComponent {
     return (
       <header className="header clearfix">
         <nav className="title-header">
-          <h1>match de <br />estampas</h1>
+          <h1>Match de <br />estampas</h1>
         </nav>
 
         <div className="logo-box">

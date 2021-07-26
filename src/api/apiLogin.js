@@ -5,21 +5,21 @@ import { getDataToken } from './apiToken';
 const host = settings.HOST;
 const version = settings.VERSION;
 
-async function token(){
-	let dataToken;
+// async function token(){
+// 	let dataToken;
 
-	await getDataToken().then(res => {
-		dataToken = res;
-	});
+// 	await getDataToken().then(res => {
+// 		dataToken = res;
+// 	});
 	
-	return dataToken;
-}
+// 	return dataToken;
+// }
 
 async function getLogin(email, pass){
 	// const tokenId = token;
 	const mailaddress = email;
 	const password = pass;
-// debugger;
+
 	return axios({
 		url: `${host}/${version}/auth/login`,
 		method: 'get',
@@ -31,7 +31,6 @@ async function getLogin(email, pass){
 		}
 	})
 	.then(function(data){
-		// debugger;
 		return data.data;
 	})
 	.catch (err => {

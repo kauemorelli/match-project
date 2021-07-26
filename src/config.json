@@ -1,5 +1,6 @@
 {
-    "HOST": "http://191.5.125.217:5002",
+    "HOST": "https://thiagotpassarella.com.br",
+    "HOST_PROD": "https://match-de-estampas-backend-cea-ela-match-de-estampas-backend.dev.cea-ecommerce.com.br",
     "VERSION": "v1",
     "REACT_APP_API_CLIENT_ID": "44c92a00-8c90-4b09-b1ff-ac9f7997ca3a",
     "REACT_APP_API_SECRET_ID": "3cb1db06-14cc-40d9-8d35-02ef47b03893"

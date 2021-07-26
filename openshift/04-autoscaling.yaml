@@ -1,0 +1,22 @@
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: CI_PROJECT_NAME
+  namespace: KUBE_NAMESPACE
+  labels:
+    app: CI_PROJECT_NAME
+    app.gitlab.com/env: CI_ENVIRONMENT_SLUG
+    app.gitlab.com/app: CI_PROJECT_PATH_SLUG
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: CI_PROJECT_NAME
+    apiVersion: apps/v1
+  minReplicas: POD_REPLICA_MIN # 2
+  maxReplicas: POD_REPLICA_MAX # 4
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: SCALING_BY_CPU_PERC # 75

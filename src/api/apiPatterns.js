@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as settings from '../config.json';
 import { getDataToken } from './apiToken';
+import publicIp from "public-ip";
 
 const host = settings.HOST;
 const version = settings.VERSION;
@@ -15,17 +16,19 @@ async function token(){
 	return dataToken;
 }
 
-async function getPatternClothe(token, campaing_id){
+async function getPatternClothe(token, client_ip, campaing_id){
 	const tokenId = token;
+	const ip_address = client_ip;
 
 	return axios({
 		url: `${host}/${version}/patternclothe/campaign/${campaing_id}`,
 		method: 'get',
-		timeout: 8000,
+		timeout: 80000,
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': `Bearer ${tokenId}`,
-			'login': `appMatchEstampa@teste.com`
+			'client_ip': `${ip_address}`,
+			'login': `appMatchEstampa+${ip_address}@teste.com`
 		}
 	})
 	.then(function(data){
@@ -38,7 +41,8 @@ async function getPatternClothe(token, campaing_id){
 
 async function makeAsync(campaing_id) {
 	const token_id = await token();
-	const patternClotheList = await getPatternClothe(token_id, campaing_id);
+	const ipv4 = await publicIp.v4() || "";	
+	const patternClotheList = await getPatternClothe(token_id, ipv4, campaing_id);
 
 	return patternClotheList;
 }
